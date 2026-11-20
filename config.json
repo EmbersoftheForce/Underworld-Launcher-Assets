@@ -1,0 +1,10 @@
+{
+  "server_ip": "127.0.0.1",
+  "server_port": "44453",
+  "status_port": 44455,
+  "exe_name": "SWGEmu.exe",
+  "custom_tres": [
+    "patch_custom.tre",
+    "multipassenger.tre"
+  ]
+}
