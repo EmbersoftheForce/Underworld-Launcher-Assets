@@ -15,15 +15,17 @@
       "date": "2026-11-19",
       "title": "Crafting QoL",
       "notes": "• Streamline crafting and factory cycle timers for QoL\n• Disable random resource sampling minigame SUI popups\n• Updated the server to the latest Core3 code"
+    },
     {
       "date": "2026-11-18",
       "title": "Hillside structure placement",
       "notes": "• Add hillside structure placement, base-height slope check, and radial placement\n• Fix civic structure terrain anchor routing and double-destroy bug"
+    },
     {
       "date": "2026-10-30",
       "title": "Multi-passenger vehicles increased",
       "notes": "• added passenger seat to speederbike swoop\n• Landspeeder x-31 and x-34 added"
-    }
+    },
     {
       "date": "2026-10-27",
       "title": "Underworld Ascendant Fence",
