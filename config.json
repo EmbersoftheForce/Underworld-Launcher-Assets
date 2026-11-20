@@ -3,7 +3,7 @@
   "server_port": "44453",
   "status_port": 44455,
   "exe_name": "SWGEmu.exe",
-  "client_version": "v1.1.0",
+  "client_version": "v1.1.1",
   "discord_url": "https://discord.com",
   "website_url": "https://github.com/EmbersoftheForce",
   "custom_tres": [
