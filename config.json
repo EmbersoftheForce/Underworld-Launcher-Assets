@@ -3,8 +3,36 @@
   "server_port": "44453",
   "status_port": 44455,
   "exe_name": "SWGEmu.exe",
+  "client_version": "v1.1.0",
+  "discord_url": "https://discord.com",
+  "website_url": "https://github.com/EmbersoftheForce",
   "custom_tres": [
     "patch_custom.tre",
     "multipassenger.tre"
+  ],
+  "patch_notes": [
+    {
+      "date": "2026-11-19",
+      "title": "Crafting QoL",
+      "notes": "• Streamline crafting and factory cycle timers for QoL\n• Disable random resource sampling minigame SUI popups\n• Updated the server to the latest Core3 code"
+    {
+      "date": "2026-11-18",
+      "title": "Hillside structure placement",
+      "notes": "• Add hillside structure placement, base-height slope check, and radial placement\n• Fix civic structure terrain anchor routing and double-destroy bug"
+    {
+      "date": "2026-10-30",
+      "title": "Multi-passenger vehicles increased",
+      "notes": "• added passenger seat to speederbike swoop\n• Landspeeder x-31 and x-34 added"
+    }
+    {
+      "date": "2026-10-27",
+      "title": "Underworld Ascendant Fence",
+      "notes": "• Fix fence sales and expand contraband catalogue\n• Enable JTL by default in shared server configuration"
+    },
+    {
+      "date": "2026-10-22",
+      "title": "Multipasenger",
+      "notes": "• Added custom multi-passenger speeder seating\n• Added escort to multi-passenger"
+    }
   ]
 }
