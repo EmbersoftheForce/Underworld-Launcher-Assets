@@ -29,19 +29,23 @@ jobs:
           base_url = os.environ["BASE_URL"]
           file_entries = []
 
-          for fname in sorted(os.listdir("files")):
-              fpath = os.path.join("files", fname)
-              if not os.path.isfile(fpath) or fname.startswith("."):
-                  continue
-              sha256 = hashlib.sha256()
-              with open(fpath, "rb") as fp:
-                  for chunk in iter(lambda: fp.read(81920), b""):
-                      sha256.update(chunk)
-              file_entries.append({
-                  "name": fname,
-                  "sha256": sha256.hexdigest().lower(),
-                  "url": f"{base_url}/{fname}"
-              })
+          for root, _, filenames in os.walk("files"):
+              for fname in sorted(filenames):
+                  if fname.startswith("."):
+                      continue
+                  fpath = os.path.join(root, fname)
+                  rel_path = os.path.relpath(fpath, "files").replace("/", "\\")
+
+                  sha256 = hashlib.sha256()
+                  with open(fpath, "rb") as fp:
+                      for chunk in iter(lambda: fp.read(81920), b""):
+                          sha256.update(chunk)
+
+                  file_entries.append({
+                      "name": rel_path,
+                      "sha256": sha256.hexdigest().lower(),
+                      "url": f"{base_url}/{fname}"
+                  })
 
           manifest = {
               "server_ip": cfg["server_ip"],
@@ -66,4 +70,4 @@ jobs:
           body: "Automated client asset release."
           files: |
             manifest.json
-            files/*
+            files/**/*
