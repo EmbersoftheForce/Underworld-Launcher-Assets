@@ -1,0 +1,69 @@
+name: Build Manifest and Publish Release
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'files/**'
+      - 'config.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate manifest.json
+        run: |
+          python3 - << 'EOF'
+          import hashlib, json, os
+
+          with open("config.json", "r", encoding="utf-8") as f:
+              cfg = json.load(f)
+
+          base_url = os.environ["BASE_URL"]
+          file_entries = []
+
+          for fname in sorted(os.listdir("files")):
+              fpath = os.path.join("files", fname)
+              if not os.path.isfile(fpath) or fname.startswith("."):
+                  continue
+              sha256 = hashlib.sha256()
+              with open(fpath, "rb") as fp:
+                  for chunk in iter(lambda: fp.read(81920), b""):
+                      sha256.update(chunk)
+              file_entries.append({
+                  "name": fname,
+                  "sha256": sha256.hexdigest().lower(),
+                  "url": f"{base_url}/{fname}"
+              })
+
+          manifest = {
+              "server_ip": cfg["server_ip"],
+              "server_port": cfg["server_port"],
+              "status_port": cfg.get("status_port", 44455),
+              "exe_name": cfg["exe_name"],
+              "custom_tres": cfg["custom_tres"],
+              "files": file_entries
+          }
+
+          with open("manifest.json", "w", encoding="utf-8") as out:
+              json.dump(manifest, out, indent=2)
+          EOF
+        env:
+          BASE_URL: "https://github.com/${{ github.repository }}/releases/download/v${{ github.run_number }}"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ github.run_number }}"
+          name: "Build #${{ github.run_number }}"
+          body: "Automated client asset release."
+          files: |
+            manifest.json
+            files/*
